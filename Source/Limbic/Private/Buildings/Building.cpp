@@ -15,7 +15,6 @@ ABuilding::ABuilding()
 	GreenMaterial = CreateDefaultSubobject<UMaterialInterface>(TEXT("GreenMaterial"));
 	RedMaterial = CreateDefaultSubobject<UMaterialInterface>(TEXT("RedMaterial"));
 	BlueMaterial = CreateDefaultSubobject<UMaterialInterface>(TEXT("BlueMaterial"));
-
 }
 
 void ABuilding::BeginPlay()
@@ -31,8 +30,6 @@ void ABuilding::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	
-
 }
 
 bool ABuilding::AreRequirmentsFulfilled()
@@ -44,4 +41,10 @@ void ABuilding::OnBuildingSelected()
 {
 	StaticMeshComponent->SetMaterial(0, GreenMaterial);
 }
+
+void ABuilding::OnBuildingDeselected()
+{
+	StaticMeshComponent->SetMaterial(0, BlueMaterial);
+}
+
 

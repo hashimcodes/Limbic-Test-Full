@@ -35,10 +35,10 @@ public:
 	UPROPERTY(EditAnywhere)
 	FString BuildingName;
 
-	//UPROPERTY(visibleInstenceOnly)
+	//UPROPERTY(VisibleAnywhere)
 	EBuildingState BuildingState = EBuildingState::EBS_NotYetBuilt;
 
-	//UPROPERTY(EditAnywhere)
+	//UPROPERTY(VisibleAnywhere)
 	EBuildingType BuildingType;
 
 	ABuilding();
@@ -50,6 +50,9 @@ public:
 
 	UFUNCTION()
 	void OnBuildingSelected();
+
+	UFUNCTION()
+	void OnBuildingDeselected();
 
 protected:
 	virtual void BeginPlay() override;
