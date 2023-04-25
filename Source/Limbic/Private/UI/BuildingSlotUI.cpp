@@ -2,7 +2,7 @@
 
 
 #include "UI/BuildingSlotUI.h"
-#include "GameController.h"
+#include "Controllers/GameController.h"
 #include "Buildings/Building.h"
 #include "Components/Button.h"
 

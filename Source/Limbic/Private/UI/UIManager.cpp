@@ -9,7 +9,7 @@
 #include "Components/Button.h"
 #include "Components/HorizontalBox.h"
 #include "Components/TextBlock.h"
-#include "GameController.h"
+#include "Controllers/GameController.h"
 #include "Kismet/GameplayStatics.h"
 
 AUIManager::AUIManager()

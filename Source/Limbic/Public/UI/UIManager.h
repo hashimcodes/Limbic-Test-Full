@@ -3,13 +3,13 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameFramework/Pawn.h"
+#include "GameFramework/Actor.h"
 #include "UIManager.generated.h"
 
 class UWidgetComponent;
 
 UCLASS()
-class LIMBIC_API AUIManager : public APawn
+class LIMBIC_API AUIManager : public AActor
 {
 	GENERATED_BODY()
 	

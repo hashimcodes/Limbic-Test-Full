@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "GameController.h"
+#include "Controllers/GameController.h"
 #include "Buildings/Building.h"
 #include "UI/PlacementUI.h"
 
