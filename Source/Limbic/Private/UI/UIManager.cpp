@@ -2,37 +2,29 @@
 
 
 #include "UI/UIManager.h"
-#include "Components/WidgetComponent.h"
 #include "Blueprint/UserWidget.h"
 #include "UI/PlacementUI.h"
 #include "UI/BuildingButtonUI.h"
 #include "UI/BuildingSlotUI.h"
 #include "Components/Button.h"
-#include "Components/ScrollBox.h"
+#include "Components/HorizontalBox.h"
 #include "Components/TextBlock.h"
 #include "GameController.h"
+#include "Kismet/GameplayStatics.h"
 
 
 AUIManager::AUIManager()
 {
 	PrimaryActorTick.bCanEverTick = false;
 
-	PlacementWC = CreateDefaultSubobject<UWidgetComponent>("PlacementWidgetComponent");
-	PlacementWC->SetupAttachment(GetRootComponent());
-
-	BuildingButtonWC = CreateDefaultSubobject<UWidgetComponent>("BuildingButtonWidgetComponent");
-	BuildingButtonWC->SetupAttachment(GetRootComponent());
-
-	BuildingSlotWC = CreateDefaultSubobject<UWidgetComponent>("BuildingSlotWidgetComponent");
-	BuildingSlotWC->SetupAttachment(GetRootComponent());
 }
 
 void AUIManager::BeginPlay()
 {
 	Super::BeginPlay();
 
-	PlacementUW = Cast<UPlacementUI>(PlacementWC->GetUserWidgetObject());
-	BuildingButtonUW = Cast<UBuildingButtonUI>(BuildingButtonWC->GetUserWidgetObject());
+	PlacementUW = Cast<UPlacementUI>(CreateWidget(GetWorld(), PlacementWBP));
+	BuildingButtonUW = Cast<UBuildingButtonUI>(CreateWidget(GetWorld(), BuildingButtonWBP));
 
 	if (BuildingButtonUW)
 	{
@@ -42,9 +34,14 @@ void AUIManager::BeginPlay()
 
 	if (PlacementUW)
 	{
+		GameController = Cast<AGameController>(UGameplayStatics::GetPlayerController(GetWorld(), 0));
+		if (GameController)
+		{
+			GameController->PlacementUI = PlacementUW;
+		}
 		for (int i = 0; i < BuildingList.Num(); i++)
 		{
-			UBuildingSlotUI* BuildingSlotUW = Cast<UBuildingSlotUI>(BuildingSlotWC->GetUserWidgetObject());
+			UBuildingSlotUI* BuildingSlotUW = Cast<UBuildingSlotUI>(CreateWidget(GetWorld(), BuildingSlotWBP));
 			BuildingSlotUW->Building = BuildingList[i];
 			PlacementUW->BuildingsListUI->AddChild(BuildingSlotUW);
 		}
@@ -59,14 +56,13 @@ void AUIManager::Tick(float DeltaTime)
 
 void AUIManager::ToggleBuildingsPlacement()
 {
-	if (!bBuildingPlacementShowing)
+	if (PlacementUW->IsInViewport())
+	{
+		PlacementUW->RemoveFromViewport();
+	}
+	else
 	{
 		PlacementUW->AddToViewport();
-		bBuildingPlacementShowing = true;
-		return;
 	}
-
-	PlacementUW->RemoveFromViewport();
-	bBuildingPlacementShowing = false;
 }
 

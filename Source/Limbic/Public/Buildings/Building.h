@@ -78,5 +78,5 @@ private:
 	class UMaterialInterface* RedMaterial;
 
 	UPROPERTY(EditAnywhere)
-	class UMaterialInterface* BlueMaterial;
+	class UMaterialInterface* BuildingColor;
 };

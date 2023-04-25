@@ -3,6 +3,7 @@
 
 #include "GameController.h"
 #include "Buildings/Building.h"
+#include "UI/PlacementUI.h"
 
 
 AGameController::AGameController()
@@ -60,6 +61,10 @@ void AGameController::OnMouseClicked()
 
 		if (Hit.bBlockingHit)
 		{
+			if (PlacementUI && PlacementUI->IsInViewport())
+			{
+				PlacementUI->RemoveFromViewport();
+			}
 			if (SelectedBuilding)
 			{
 				SelectedBuilding->OnBuildingDeselected();

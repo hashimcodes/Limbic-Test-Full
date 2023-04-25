@@ -16,6 +16,6 @@ class LIMBIC_API UPlacementUI : public UUserWidget
 	
 public:
 	UPROPERTY(meta = (BindWidget))
-	class UScrollBox* BuildingsListUI;
+	class UHorizontalBox* BuildingsListUI;
 
 };

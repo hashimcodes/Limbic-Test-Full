@@ -29,6 +29,9 @@ public:
 	UPROPERTY(VisibleAnywhere)
 	ABuilding* BuildingToPlace;
 
+	UPROPERTY(VisibleAnywhere)
+	class UPlacementUI* PlacementUI;
+
 private:
 	UPROPERTY(VisibleAnywhere)
 	ABuilding* SelectedBuilding;

@@ -25,7 +25,7 @@ ABuilding::ABuilding()
 
 	GreenMaterial = CreateDefaultSubobject<UMaterialInterface>(TEXT("GreenMaterial"));
 	RedMaterial = CreateDefaultSubobject<UMaterialInterface>(TEXT("RedMaterial"));
-	BlueMaterial = CreateDefaultSubobject<UMaterialInterface>(TEXT("BlueMaterial"));
+	BuildingColor = CreateDefaultSubobject<UMaterialInterface>(TEXT("BuildingColor"));
 }
 
 void ABuilding::BeginPlay()
@@ -50,7 +50,7 @@ void ABuilding::OnBoxEndOverlap(UPrimitiveComponent* OverlappedComponent, AActor
 {
 	//based on building state the color will back to green (if player currently building it) or blue (if it already built) 
 	if (BuildingState == EBuildingState::EBS_Built) {
-		StaticMeshComponent->SetMaterial(0, BlueMaterial);
+		StaticMeshComponent->SetMaterial(0, BuildingColor);
 	}
 	else
 	{
@@ -68,7 +68,7 @@ void ABuilding::OnBuildingSelected()
 void ABuilding::OnBuildingDeselected()
 {
 	//Can be any functionality when building is selected (closing building abilities UMG for example)
-	StaticMeshComponent->SetMaterial(0, BlueMaterial);
+	StaticMeshComponent->SetMaterial(0, BuildingColor);
 }
 
 bool ABuilding::CanBePlaced()
@@ -80,5 +80,5 @@ void ABuilding::PlaceBuilding(const FVector& Location)
 {
 	SetActorLocation(Location);
 	BuildingState = EBuildingState::EBS_Built;
-	StaticMeshComponent->SetMaterial(0, BlueMaterial);
+	StaticMeshComponent->SetMaterial(0, BuildingColor);
 }

@@ -25,22 +25,22 @@ protected:
 
 private:
 	UPROPERTY(VisibleAnywhere)
-	UWidgetComponent* PlacementWC;
-
-	UPROPERTY(VisibleAnywhere)
-	UWidgetComponent* BuildingButtonWC;
-
-	UPROPERTY(VisibleAnywhere)
-	UWidgetComponent* BuildingSlotWC;
-
-	UPROPERTY(VisibleAnywhere)
 	class UPlacementUI* PlacementUW;
 
 	UPROPERTY(VisibleAnywhere)
 	class UBuildingButtonUI* BuildingButtonUW;
+
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<class UPlacementUI> PlacementWBP;
 	
-	UPROPERTY()
-	bool bBuildingPlacementShowing = false;
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<class UBuildingButtonUI> BuildingButtonWBP;
+
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<class UBuildingSlotUI> BuildingSlotWBP;
+
+	UPROPERTY(VisibleAnywhere)
+	class AGameController* GameController;
 
 	UFUNCTION()
 	void ToggleBuildingsPlacement();
