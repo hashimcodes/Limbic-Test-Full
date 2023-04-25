@@ -70,5 +70,4 @@ private:
 
 	UFUNCTION()
 	void RotateCamera(float DeltaTime);
-	
 };

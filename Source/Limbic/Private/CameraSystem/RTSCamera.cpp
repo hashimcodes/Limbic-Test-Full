@@ -5,7 +5,6 @@
 #include "Camera/CameraComponent.h"
 #include "GameController.h"
 
-
 ARTSCamera::ARTSCamera()
 {
 	PrimaryActorTick.bCanEverTick = true;
@@ -73,6 +72,7 @@ void ARTSCamera::MoveCamera(float DeltaTime)
 
 void ARTSCamera::CameraDirectionalMove(const FVector& Direction)
 {
+	//alignment for axes with rotation
 	FVector rotatedVector = GetActorRotation().RotateVector(Direction);
 	FVector newActorLocation = GetActorLocation() + rotatedVector;
 	SetActorLocation(newActorLocation);
@@ -103,7 +103,6 @@ void ARTSCamera::RotateCamera(float value)
 		SetActorRotation(newActorRotation);
 	}
 }
-
 
 void ARTSCamera::Tick(float DeltaTime)
 {

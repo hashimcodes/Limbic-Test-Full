@@ -6,16 +6,12 @@
 #include "Blueprint/UserWidget.h"
 #include "BuildingSlotUI.generated.h"
 
-/**
- * 
- */
 UCLASS()
 class LIMBIC_API UBuildingSlotUI : public UUserWidget
 {
 	GENERATED_BODY()
 
 public:
-
 	UPROPERTY(meta = (BindWidget))
 	class UButton* SlotButton;
 

@@ -12,7 +12,6 @@
 #include "GameController.h"
 #include "Kismet/GameplayStatics.h"
 
-
 AUIManager::AUIManager()
 {
 	PrimaryActorTick.bCanEverTick = false;
@@ -39,6 +38,7 @@ void AUIManager::BeginPlay()
 		{
 			GameController->PlacementUI = PlacementUW;
 		}
+
 		for (int i = 0; i < BuildingList.Num(); i++)
 		{
 			UBuildingSlotUI* BuildingSlotUW = Cast<UBuildingSlotUI>(CreateWidget(GetWorld(), BuildingSlotWBP));

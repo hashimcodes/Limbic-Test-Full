@@ -6,9 +6,6 @@
 #include "Blueprint/UserWidget.h"
 #include "BuildingButtonUI.generated.h"
 
-/**
- * 
- */
 UCLASS()
 class LIMBIC_API UBuildingButtonUI : public UUserWidget
 {

@@ -5,14 +5,12 @@
 #include "Buildings/Building.h"
 #include "UI/PlacementUI.h"
 
-
 AGameController::AGameController()
 {
 	PrimaryActorTick.bCanEverTick = true;
 	bShowMouseCursor = true;
 	bEnableClickEvents = true;
 	bEnableTouchEvents = true;
-
 }
 
 void AGameController::Tick(float DeltaTime)
@@ -61,14 +59,17 @@ void AGameController::OnMouseClicked()
 
 		if (Hit.bBlockingHit)
 		{
+			//Clicking outside the placementUI deactivates it
 			if (PlacementUI && PlacementUI->IsInViewport())
 			{
 				PlacementUI->RemoveFromViewport();
 			}
+
 			if (SelectedBuilding)
 			{
 				SelectedBuilding->OnBuildingDeselected();
 			}
+
 			ABuilding* building = Cast<ABuilding>(Hit.GetActor());
 			if (building)
 			{

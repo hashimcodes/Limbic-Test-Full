@@ -6,9 +6,6 @@
 #include "Blueprint/UserWidget.h"
 #include "PlacementUI.generated.h"
 
-/**
- * 
- */
 UCLASS()
 class LIMBIC_API UPlacementUI : public UUserWidget
 {
@@ -17,5 +14,4 @@ class LIMBIC_API UPlacementUI : public UUserWidget
 public:
 	UPROPERTY(meta = (BindWidget))
 	class UHorizontalBox* BuildingsListUI;
-
 };
