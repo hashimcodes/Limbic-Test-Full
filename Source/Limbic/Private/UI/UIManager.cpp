@@ -42,18 +42,10 @@ void AUIManager::BeginPlay()
 
 	if (PlacementUW)
 	{
-		if (GEngine)
-		{
-			//GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Red, FString::Printf(TEXT("%d"), BuildingList.Num()));
-		}
-
-		//PlacementUW->BuildingsListUI->ClearChildren();
-		for (int i = 0; i < 1; i++)
+		for (int i = 0; i < BuildingList.Num(); i++)
 		{
 			UBuildingSlotUI* BuildingSlotUW = Cast<UBuildingSlotUI>(BuildingSlotWC->GetUserWidgetObject());
 			BuildingSlotUW->Building = BuildingList[i];
-			BuildingSlotUW->GameController = Cast<AGameController>(GetController());
-			BuildingSlotUW->SetOnclickListener();
 			PlacementUW->BuildingsListUI->AddChild(BuildingSlotUW);
 		}
 	}
@@ -78,11 +70,3 @@ void AUIManager::ToggleBuildingsPlacement()
 	bBuildingPlacementShowing = false;
 }
 
-void AUIManager::Building()
-{
-	if (GEngine)
-	{
-		//GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Red, TEXT("UI button Clicked"));
-		GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Red, TEXT("Building"));
-	}
-}

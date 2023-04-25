@@ -14,12 +14,6 @@ AGameController::AGameController()
 
 }
 
-void AGameController::BeginPlay()
-{
-	Super::BeginPlay();
-	
-}
-
 void AGameController::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);

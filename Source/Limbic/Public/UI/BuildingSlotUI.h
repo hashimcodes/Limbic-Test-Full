@@ -28,9 +28,8 @@ public:
 	UPROPERTY()
 	TSubclassOf<class ABuilding> Building;
 
-
-	UFUNCTION()
-	void SetOnclickListener();
+protected:
+	virtual void NativeConstruct() override;
 
 private:
 	UFUNCTION()

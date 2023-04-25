@@ -20,12 +20,10 @@ public:
 	UPROPERTY(EditDefaultsOnly)
 	TArray<TSubclassOf<class ABuilding>> BuildingList;
 
-
 protected:
 	virtual void BeginPlay() override;
 
 private:
-
 	UPROPERTY(VisibleAnywhere)
 	UWidgetComponent* PlacementWC;
 
@@ -40,13 +38,10 @@ private:
 
 	UPROPERTY(VisibleAnywhere)
 	class UBuildingButtonUI* BuildingButtonUW;
-
+	
 	UPROPERTY()
 	bool bBuildingPlacementShowing = false;
 
 	UFUNCTION()
 	void ToggleBuildingsPlacement();
-
-	UFUNCTION()
-	void Building();
 };

@@ -7,14 +7,25 @@
 #include "Components/Button.h"
 
 
-void UBuildingSlotUI::SetOnclickListener()
+void UBuildingSlotUI::NativeConstruct()
 {
 	SlotButton->OnClicked.AddDynamic(this, &UBuildingSlotUI::OnSlotButtonClicked);
+	GameController = Cast<AGameController>(GetOwningPlayer());
 }
 
 void UBuildingSlotUI::OnSlotButtonClicked()
 {
 	ABuilding* building = GetWorld()->SpawnActor<ABuilding>(Building);
-	GameController->BuildingToPlace = building;
-	GameController->GameState = EGameState::EGS_BuildingMode;
+	if (GameController)
+	{
+		GameController->BuildingToPlace = building;
+		GameController->GameState = EGameState::EGS_BuildingMode;
+	}
+	else
+	{
+		if (GEngine)
+		{
+			GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Red, TEXT("No Game Controller"));
+		}
+	}
 }

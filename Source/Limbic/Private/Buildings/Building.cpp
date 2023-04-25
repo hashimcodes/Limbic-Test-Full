@@ -31,8 +31,6 @@ ABuilding::ABuilding()
 void ABuilding::BeginPlay()
 {
 	Super::BeginPlay();
-
-	StaticMeshComponent->SetMaterial(0, GreenMaterial);
 	StaticMeshComponent->SetOverlayMaterial(nullptr);
 }
 
@@ -58,7 +56,6 @@ void ABuilding::OnBoxEndOverlap(UPrimitiveComponent* OverlappedComponent, AActor
 	{
 		StaticMeshComponent->SetMaterial(0, GreenMaterial);
 	}
-
 	bCollidesWithOtherBuilding = false;
 }
 
