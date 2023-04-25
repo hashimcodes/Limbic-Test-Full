@@ -4,12 +4,20 @@
 #include "GameController.h"
 #include "Buildings/Building.h"
 
+
 AGameController::AGameController()
 {
 	PrimaryActorTick.bCanEverTick = true;
 	bShowMouseCursor = true;
 	bEnableClickEvents = true;
 	bEnableTouchEvents = true;
+
+}
+
+void AGameController::BeginPlay()
+{
+	Super::BeginPlay();
+	
 }
 
 void AGameController::Tick(float DeltaTime)

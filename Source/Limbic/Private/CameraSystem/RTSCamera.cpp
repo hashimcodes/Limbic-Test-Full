@@ -3,6 +3,8 @@
 #include "CameraSystem/RTSCamera.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
+#include "GameController.h"
+
 
 ARTSCamera::ARTSCamera()
 {
@@ -23,10 +25,10 @@ ARTSCamera::ARTSCamera()
 void ARTSCamera::BeginPlay()
 {
 	Super::BeginPlay();
-	PController = Cast<APlayerController>(GetController());
-	if (PController)
+	GameController = Cast<AGameController>(GetController());
+	if (GameController)
 	{
-		PController->GetViewportSize(ScreenSizeX, ScreenSizeY);
+		GameController->GetViewportSize(ScreenSizeX, ScreenSizeY);
 	}
 }
 
@@ -37,9 +39,9 @@ void ARTSCamera::MoveCamera(float DeltaTime)
 	FVector xAxisDirection = FVector(0.f, CameraMoveSpeed * DeltaTime, 0.f);
 	FVector yAxisDirection = FVector(CameraMoveSpeed * DeltaTime, 0.f, 0.f);
 
-	if (PController)
+	if (GameController)
 	{
-		PController->GetMousePosition(mousePosX, mousePosY);
+		GameController->GetMousePosition(mousePosX, mousePosY);
 	}
 	else
 	{
@@ -94,7 +96,7 @@ void ARTSCamera::CameraZoomOut()
 
 void ARTSCamera::RotateCamera(float value)
 {
-	if (PController->IsInputKeyDown(EKeys::MiddleMouseButton))
+	if (GameController->IsInputKeyDown(EKeys::MiddleMouseButton))
 	{
 		float yawModifier = CameraRotationSpeed * FApp::GetDeltaTime() * value;
 		FRotator newActorRotation = FRotator(GetActorRotation().Pitch, GetActorRotation().Yaw + yawModifier, GetActorRotation().Roll);

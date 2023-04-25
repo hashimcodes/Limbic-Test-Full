@@ -29,6 +29,9 @@ public:
 	UPROPERTY(VisibleAnywhere)
 	ABuilding* BuildingToPlace;
 	
+protected:
+	virtual void BeginPlay() override;
+
 private:
 
 	UPROPERTY(VisibleAnywhere)

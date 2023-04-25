@@ -54,7 +54,7 @@ private:
 	int32 ScreenSizeY;
 
 	UPROPERTY()
-	APlayerController* PController;
+	class AGameController* GameController;
 
 	UFUNCTION()
 	void CameraDirectionalMove(const FVector& Direction);
