@@ -30,7 +30,7 @@ private:
 	class UCameraComponent* CameraComp;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Camera Props")
-	float CameraMoveSpeed = 150.f;
+	float CameraMoveSpeed = 1000.f;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Camera Props")
 	float CameraEdgesMargin = 40.f;
@@ -42,10 +42,10 @@ private:
 	float ZoomMinValue = 300.f;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Camera Props")
-	float CameraZoomSpeed = 20.f;
+	float CameraZoomSpeed = 30.f;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Camera Props")
-	float CameraRotationSpeed = 100.f;
+	float CameraRotationSpeed = 200.f;
 
 	UPROPERTY()
 	int32 ScreenSizeX;
@@ -60,13 +60,16 @@ private:
 	void CameraDirectionalMove(const FVector& Direction);
 
 	UFUNCTION()
-	void MoveCamera(float DeltaTime);
+	void MoveCameraOnEdges(float DeltaTime);
 
 	UFUNCTION()
-	void CameraZoomIn();
+	void CameraMoveOnX(float Value);
 
 	UFUNCTION()
-	void CameraZoomOut();
+	void CameraMoveOnY(float Value);
+
+	UFUNCTION()
+	void CameraZoomHandler(float Value);
 
 	UFUNCTION()
 	void RotateCamera(float DeltaTime);
