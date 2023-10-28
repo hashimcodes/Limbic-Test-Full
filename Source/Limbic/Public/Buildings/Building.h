@@ -50,7 +50,7 @@ public:
 	bool CanBePlaced();
 
 	UFUNCTION()
-	void PlaceBuilding(const FVector& Location);
+	void PlaceBuilding();
 
 protected:
 	virtual void BeginPlay() override;

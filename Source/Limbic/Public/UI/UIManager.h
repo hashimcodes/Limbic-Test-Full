@@ -6,8 +6,6 @@
 #include "GameFramework/Actor.h"
 #include "UIManager.generated.h"
 
-class UWidgetComponent;
-
 UCLASS()
 class LIMBIC_API AUIManager : public AActor
 {
@@ -15,7 +13,7 @@ class LIMBIC_API AUIManager : public AActor
 	
 public:	
 	AUIManager();
-	virtual void Tick(float DeltaTime) override;
+	//virtual void Tick(float DeltaTime) override;
 
 	UPROPERTY(EditDefaultsOnly)
 	TArray<TSubclassOf<class ABuilding>> BuildingList;
@@ -38,6 +36,9 @@ private:
 
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<class UBuildingSlotUI> BuildingSlotWBP;
+
+	UPROPERTY(EditAnywhere)
+	class ABuildingsController* BuildingsController;
 
 	UPROPERTY(VisibleAnywhere)
 	class AGameController* GameController;

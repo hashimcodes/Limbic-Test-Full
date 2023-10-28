@@ -18,8 +18,8 @@ public:
 	UPROPERTY(meta = (BindWidget))
 	class UTextBlock* BuildingName;
 
-	UPROPERTY()
-	class AGameController* GameController;
+	UPROPERTY(EditAnywhere)
+	class ABuildingsController* BuildingsController;
 
 	UPROPERTY()
 	TSubclassOf<class ABuilding> Building;

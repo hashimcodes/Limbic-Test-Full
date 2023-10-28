@@ -76,9 +76,13 @@ bool ABuilding::CanBePlaced()
 	return !bCollidesWithOtherBuilding;
 }
 
-void ABuilding::PlaceBuilding(const FVector& Location)
+void ABuilding::PlaceBuilding()
 {
-	SetActorLocation(Location);
+	//SetActorLocation(Location);
 	BuildingState = EBuildingState::EBS_Built;
 	StaticMeshComponent->SetMaterial(0, BuildingColor);
+	if (GEngine)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Green, TEXT("Placing"));
+	}
 }

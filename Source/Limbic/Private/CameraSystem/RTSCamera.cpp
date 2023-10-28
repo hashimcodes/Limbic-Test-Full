@@ -132,6 +132,14 @@ void ARTSCamera::RotateCamera(float DeltaTime)
 	SetActorRotation(newActorRotation);
 }
 
+void ARTSCamera::OnMouseClicked()
+{
+	if (GEngine)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Blue, TEXT("OnMouseClicked"));
+	}
+}
+
 void ARTSCamera::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
@@ -148,5 +156,6 @@ void ARTSCamera::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent
 	PlayerInputComponent->BindAxis(FName("LeftRight"), this, &ARTSCamera::CameraMoveOnX);
 	PlayerInputComponent->BindAxis(FName("UpDown"), this, &ARTSCamera::CameraMoveOnY);
 	PlayerInputComponent->BindAxis(FName("MouseWheel"), this, &ARTSCamera::CameraZoomHandler);
+	//PlayerInputComponent->BindAction(FName("E"), IE_Pressed, this, &ARTSCamera::OnMouseClicked);
 }
 

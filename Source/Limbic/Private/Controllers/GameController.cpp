@@ -2,7 +2,6 @@
 
 
 #include "Controllers/GameController.h"
-#include "Buildings/Building.h"
 #include "UI/PlacementUI.h"
 
 AGameController::AGameController()
@@ -16,25 +15,19 @@ AGameController::AGameController()
 void AGameController::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	//while in building mode the building following the mouse position till player place it in the world
-	if (GameState == EGameState::EGS_BuildingMode && BuildingToPlace)
-	{
-		BuildingToPlace->SetActorLocation(GetMousePlace());
-	}
 }
 
-void AGameController::SetupInputComponent()
+FHitResult AGameController::GetMouseHit()
 {
-	Super::SetupInputComponent();
-
-	InputComponent->BindAction(FName("LeftMouseClick"), IE_Pressed, this, &AGameController::OnMouseClicked);
+	FHitResult Hit;
+	GetHitResultUnderCursor(ECC_Pawn, false, Hit);
+	return Hit;
 }
 
 FVector AGameController::GetMousePlace()
 {
 	FVector worldLocation;
 	FVector worldDirection;
-	//2D mouse position projection on 3D world
 	DeprojectMousePositionToWorld(worldLocation, worldDirection);
 	FVector mouseWorldLocation = worldLocation + (worldDirection * 1500.f);
 	return FVector(mouseWorldLocation.X, mouseWorldLocation.Y, 0.f);
@@ -42,40 +35,25 @@ FVector AGameController::GetMousePlace()
 
 void AGameController::OnMouseClicked()
 {
-	//Mouse left button click changes it's behaviour based on game mode
-	if (GameState == EGameState::EGS_BuildingMode && BuildingToPlace)
+	if (GEngine)
 	{
-		if (BuildingToPlace->CanBePlaced())
+		FVector mousePlaceVector = GetMousePlace();
+		GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Red, FString::Printf(TEXT("GetMousePlace: %f %f %f"), mousePlaceVector.X, mousePlaceVector.Y, mousePlaceVector.Y));
+	}
+	FHitResult Hit = GetMouseHit();
+
+	if (Hit.bBlockingHit)
+	{
+		if (PlacementUI && PlacementUI->IsInViewport())
 		{
-			BuildingToPlace->PlaceBuilding(GetMousePlace());
-			BuildingToPlace = nullptr;
-			GameState = EGameState::EGS_NaviagtionMode;
+			PlacementUI->RemoveFromViewport();
 		}
 	}
-	else if (GameState == EGameState::EGS_NaviagtionMode)
-	{
-		FHitResult Hit;
-		GetHitResultUnderCursor(ECC_Pawn, false, Hit);
+}
 
-		if (Hit.bBlockingHit)
-		{
-			//Clicking outside the placementUI deactivates it
-			if (PlacementUI && PlacementUI->IsInViewport())
-			{
-				PlacementUI->RemoveFromViewport();
-			}
+void AGameController::SetupInputComponent()
+{
+	Super::SetupInputComponent();
 
-			if (SelectedBuilding)
-			{
-				SelectedBuilding->OnBuildingDeselected();
-			}
-
-			ABuilding* building = Cast<ABuilding>(Hit.GetActor());
-			if (building)
-			{
-				SelectedBuilding = building;
-				building->OnBuildingSelected();
-			}
-		}
-	}
+	//InputComponent->BindAction(FName("LeftMouseClick"), IE_Pressed, this, &AGameController::OnMouseClicked);
 }

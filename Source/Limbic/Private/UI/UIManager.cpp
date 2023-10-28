@@ -10,12 +10,12 @@
 #include "Components/HorizontalBox.h"
 #include "Components/TextBlock.h"
 #include "Controllers/GameController.h"
+#include "Buildings/BuildingsController.h"
 #include "Kismet/GameplayStatics.h"
 
 AUIManager::AUIManager()
 {
 	PrimaryActorTick.bCanEverTick = false;
-
 }
 
 void AUIManager::BeginPlay()
@@ -42,16 +42,11 @@ void AUIManager::BeginPlay()
 		for (int i = 0; i < BuildingList.Num(); i++)
 		{
 			UBuildingSlotUI* BuildingSlotUW = Cast<UBuildingSlotUI>(CreateWidget(GetWorld(), BuildingSlotWBP));
+			BuildingSlotUW->BuildingsController = BuildingsController;
 			BuildingSlotUW->Building = BuildingList[i];
 			PlacementUW->BuildingsListUI->AddChild(BuildingSlotUW);
 		}
 	}
-}
-
-void AUIManager::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-
 }
 
 void AUIManager::ToggleBuildingsPlacement()

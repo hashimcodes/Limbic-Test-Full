@@ -6,14 +6,6 @@
 #include "GameFramework/PlayerController.h"
 #include "GameController.generated.h"
 
-enum class EGameState : uint8
-{
-	EGS_BuildingMode,
-	EGS_NaviagtionMode
-};
-
-class ABuilding;
-
 UCLASS()
 class LIMBIC_API AGameController : public APlayerController
 {
@@ -24,21 +16,16 @@ public:
 	virtual void Tick(float DeltaTime) override;
 	virtual void SetupInputComponent() override;
 
-	EGameState GameState = EGameState::EGS_NaviagtionMode;
-
-	UPROPERTY(VisibleAnywhere)
-	ABuilding* BuildingToPlace;
-
 	UPROPERTY(VisibleAnywhere)
 	class UPlacementUI* PlacementUI;
 
-private:
-	UPROPERTY(VisibleAnywhere)
-	ABuilding* SelectedBuilding;
+	UFUNCTION()
+	FHitResult GetMouseHit();
 
 	UFUNCTION()
 	FVector GetMousePlace();
 
+private:
 	UFUNCTION()
 	void OnMouseClicked();
 };
