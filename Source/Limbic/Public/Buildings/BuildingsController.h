@@ -36,4 +36,7 @@ private:
 
 	UFUNCTION()
 	void OnMouseClicked();
+
+	UFUNCTION()
+	void DiscardBuilding();
 };

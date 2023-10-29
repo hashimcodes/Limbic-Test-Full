@@ -9,9 +9,18 @@
 UCLASS()
 class LIMBIC_API UPlacementUI : public UUserWidget
 {
-	GENERATED_BODY()
-	
+	GENERATED_BODY()	
 public:
 	UPROPERTY(meta = (BindWidget))
 	class UHorizontalBox* BuildingsListUI;
+
+	UPROPERTY(meta = (BindWidget))
+	class UButton* PlacementButton;
+
+protected:
+	virtual void NativeConstruct() override;
+
+private:
+	UFUNCTION()
+	void OnPlacementButtonClicked();
 };

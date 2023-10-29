@@ -34,15 +34,12 @@ void ABuilding::BeginPlay()
 	StaticMeshComponent->SetOverlayMaterial(nullptr);
 }
 
-void ABuilding::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-
-}
-
 void ABuilding::OnBoxBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	StaticMeshComponent->SetMaterial(0, RedMaterial);
+	if (BuildingState == EBuildingState::EBS_NotYetBuilt)
+	{
+		StaticMeshComponent->SetMaterial(0, RedMaterial);
+	}
 	bCollidesWithOtherBuilding = true;
 }
 
@@ -78,11 +75,6 @@ bool ABuilding::CanBePlaced()
 
 void ABuilding::PlaceBuilding()
 {
-	//SetActorLocation(Location);
 	BuildingState = EBuildingState::EBS_Built;
 	StaticMeshComponent->SetMaterial(0, BuildingColor);
-	if (GEngine)
-	{
-		GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Green, TEXT("Placing"));
-	}
 }

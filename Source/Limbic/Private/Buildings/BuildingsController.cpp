@@ -15,13 +15,6 @@ void ABuildingsController::BeginPlay()
 {
 	Super::BeginPlay();
 	GameController = Cast<AGameController>(UGameplayStatics::GetPlayerController(GetWorld(), 0));
-	if (GameController)
-	{
-		if (GEngine)
-		{
-			GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Green, TEXT("Game Controller IN"));
-		}
-	}
 }
 
 void ABuildingsController::Tick(float DeltaTime)
@@ -41,6 +34,10 @@ void ABuildingsController::Tick(float DeltaTime)
 		OnMouseClicked();
 	}
 
+	if (GameController && GameController->WasInputKeyJustPressed(EKeys::RightMouseButton))
+	{
+		DiscardBuilding();
+	}
 }
 
 void ABuildingsController::OnMouseClicked()
@@ -51,7 +48,11 @@ void ABuildingsController::OnMouseClicked()
 		BuildingToPlace = nullptr;
 	}
 
-	FHitResult Hit = GameController->GetMouseHit();
+	FHitResult Hit;
+	if (GameController)
+	{
+		Hit = GameController->GetMouseHit();
+	}
 	if (Hit.bBlockingHit)
 	{
 		if (SelectedBuilding)
@@ -68,10 +69,17 @@ void ABuildingsController::OnMouseClicked()
 	}
 }
 
+void ABuildingsController::DiscardBuilding()
+{
+	if (BuildingToPlace)
+	{
+		BuildingToPlace->Destroy();
+	}
+}
+
 
 void ABuildingsController::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
-	//PlayerInputComponent->BindAction(FName("E"), IE_Pressed, this, &ABuildingsController::OnMouseClicked);
 }
 

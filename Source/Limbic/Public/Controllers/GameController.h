@@ -13,8 +13,6 @@ class LIMBIC_API AGameController : public APlayerController
 
 public:
 	AGameController();
-	virtual void Tick(float DeltaTime) override;
-	virtual void SetupInputComponent() override;
 
 	UPROPERTY(VisibleAnywhere)
 	class UPlacementUI* PlacementUI;
@@ -24,8 +22,4 @@ public:
 
 	UFUNCTION()
 	FVector GetMousePlace();
-
-private:
-	UFUNCTION()
-	void OnMouseClicked();
 };

@@ -13,7 +13,6 @@ class LIMBIC_API AUIManager : public AActor
 	
 public:	
 	AUIManager();
-	//virtual void Tick(float DeltaTime) override;
 
 	UPROPERTY(EditDefaultsOnly)
 	TArray<TSubclassOf<class ABuilding>> BuildingList;
@@ -25,24 +24,12 @@ private:
 	UPROPERTY(VisibleAnywhere)
 	class UPlacementUI* PlacementUW;
 
-	UPROPERTY(VisibleAnywhere)
-	class UBuildingButtonUI* BuildingButtonUW;
-
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<class UPlacementUI> PlacementWBP;
-	
-	UPROPERTY(EditAnywhere)
-	TSubclassOf<class UBuildingButtonUI> BuildingButtonWBP;
 
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<class UBuildingSlotUI> BuildingSlotWBP;
 
 	UPROPERTY(EditAnywhere)
 	class ABuildingsController* BuildingsController;
-
-	UPROPERTY(VisibleAnywhere)
-	class AGameController* GameController;
-
-	UFUNCTION()
-	void ToggleBuildingsPlacement();
 };

@@ -12,11 +12,6 @@ AGameController::AGameController()
 	bEnableTouchEvents = true;
 }
 
-void AGameController::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-}
-
 FHitResult AGameController::GetMouseHit()
 {
 	FHitResult Hit;
@@ -31,29 +26,4 @@ FVector AGameController::GetMousePlace()
 	DeprojectMousePositionToWorld(worldLocation, worldDirection);
 	FVector mouseWorldLocation = worldLocation + (worldDirection * 1500.f);
 	return FVector(mouseWorldLocation.X, mouseWorldLocation.Y, 0.f);
-}
-
-void AGameController::OnMouseClicked()
-{
-	if (GEngine)
-	{
-		FVector mousePlaceVector = GetMousePlace();
-		GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Red, FString::Printf(TEXT("GetMousePlace: %f %f %f"), mousePlaceVector.X, mousePlaceVector.Y, mousePlaceVector.Y));
-	}
-	FHitResult Hit = GetMouseHit();
-
-	if (Hit.bBlockingHit)
-	{
-		if (PlacementUI && PlacementUI->IsInViewport())
-		{
-			PlacementUI->RemoveFromViewport();
-		}
-	}
-}
-
-void AGameController::SetupInputComponent()
-{
-	Super::SetupInputComponent();
-
-	//InputComponent->BindAction(FName("LeftMouseClick"), IE_Pressed, this, &AGameController::OnMouseClicked);
 }

@@ -50,6 +50,7 @@ void ARTSCamera::MoveCameraOnEdges(float DeltaTime)
 		{
 			GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Red, TEXT("Null Player Controller"));
 		}
+		return;
 	}
 
 	//Left and Right
@@ -156,6 +157,5 @@ void ARTSCamera::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent
 	PlayerInputComponent->BindAxis(FName("LeftRight"), this, &ARTSCamera::CameraMoveOnX);
 	PlayerInputComponent->BindAxis(FName("UpDown"), this, &ARTSCamera::CameraMoveOnY);
 	PlayerInputComponent->BindAxis(FName("MouseWheel"), this, &ARTSCamera::CameraZoomHandler);
-	//PlayerInputComponent->BindAction(FName("E"), IE_Pressed, this, &ARTSCamera::OnMouseClicked);
 }
 

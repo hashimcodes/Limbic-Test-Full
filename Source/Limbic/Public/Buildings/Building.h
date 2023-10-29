@@ -36,9 +36,10 @@ public:
 	FString BuildingName;
 
 	EBuildingState BuildingState;
+
 	EBuildingType BuildingType;
+
 	ABuilding();
-	virtual void Tick(float DeltaTime) override;
 
 	UFUNCTION()
 	void OnBuildingSelected();
