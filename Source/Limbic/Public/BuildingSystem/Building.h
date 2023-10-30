@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "Interfaces/BuildingInterface.h"
 #include "Building.generated.h"
 
 /*From my perspective, I wanted to make an Interface called IBuilding, and each type of building
@@ -15,11 +16,10 @@ enum class EBuildingState : uint8
 {
 	EBS_UnderConstruction,
 	EBS_Built,
-	EBS_Selected
 };
 
 UCLASS()
-class LIMBIC_API ABuilding : public AActor
+class LIMBIC_API ABuilding : public AActor, public IBuildingInterface
 {
 	GENERATED_BODY()
 	
@@ -32,16 +32,16 @@ public:
 	ABuilding();
 
 	UFUNCTION()
-	void OnBuildingSelected();
+	virtual void OnBuildingSelected() override;
 
 	UFUNCTION()
-	void OnBuildingDeselected();
+	virtual void OnBuildingDeselected() override;
 
 	UFUNCTION()
-	bool CanBePlaced();
+	virtual bool CanBePlaced() override;
 
 	UFUNCTION()
-	void PlaceBuilding();
+	virtual void PlaceBuilding() override;
 
 protected:
 	virtual void BeginPlay() override;
