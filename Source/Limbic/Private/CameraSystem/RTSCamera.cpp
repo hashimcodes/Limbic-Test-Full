@@ -3,7 +3,6 @@
 #include "CameraSystem/RTSCamera.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
-#include "Controllers/GameController.h"
 
 ARTSCamera::ARTSCamera()
 {
