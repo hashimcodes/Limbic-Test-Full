@@ -13,6 +13,7 @@ class LIMBIC_API AUIManager : public AActor
 	
 public:	
 	AUIManager();
+	virtual void Tick(float DeltaTime) override;
 
 	UPROPERTY(EditDefaultsOnly)
 	TArray<TSubclassOf<class ABuilding>> BuildingList;
@@ -21,6 +22,9 @@ protected:
 	virtual void BeginPlay() override;
 
 private:
+	UPROPERTY(VisibleAnywhere)
+	class APlayerController* PlayerController;
+
 	UPROPERTY(VisibleAnywhere)
 	class UPlacementUI* PlacementUW;
 
@@ -32,4 +36,7 @@ private:
 
 	UPROPERTY(EditAnywhere)
 	class ABuildingsController* BuildingsController;
+
+	UFUNCTION()
+	void OnMouseRightClicked();
 };

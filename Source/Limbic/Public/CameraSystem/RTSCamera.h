@@ -73,7 +73,4 @@ private:
 
 	UFUNCTION()
 	void RotateCamera(float DeltaTime);
-
-	UFUNCTION()
-	void OnMouseClicked();
 };

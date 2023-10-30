@@ -27,16 +27,16 @@ void ABuildingsController::Tick(float DeltaTime)
 
 	if (PlayerController && PlayerController->WasInputKeyJustPressed(EKeys::LeftMouseButton))
 	{
-		OnMouseClicked();
+		OnLeftMouseClicked();
 	}
 
-	if (PlayerController && PlayerController->WasInputKeyJustPressed(EKeys::RightMouseButton))
+	if (PlayerController && PlayerController->WasInputKeyJustPressed(EKeys::D))
 	{
 		DiscardBuilding();
 	}
 }
 
-void ABuildingsController::OnMouseClicked()
+void ABuildingsController::OnLeftMouseClicked()
 {
 	if (BuildingToPlace && BuildingToPlace->CanBePlaced())
 	{

@@ -21,9 +21,6 @@ public:
 	UPROPERTY(VisibleAnywhere)
 	ABuilding* BuildingToPlace;
 
-	UPROPERTY(VisibleAnywhere)
-	class UPlacementUI* PlacementUI;
-
 protected:
 	virtual void BeginPlay() override;
 
@@ -35,7 +32,7 @@ private:
 	ABuilding* SelectedBuilding;
 
 	UFUNCTION()
-	void OnMouseClicked();
+	void OnLeftMouseClicked();
 
 	UFUNCTION()
 	void DiscardBuilding();
