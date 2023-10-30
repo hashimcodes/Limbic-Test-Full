@@ -2,8 +2,8 @@
 
 
 #include "UI/BuildingSlotUI.h"
-#include "Buildings/BuildingsController.h"
-#include "Buildings/Building.h"
+#include "BuildingSystem/BuildingsController.h"
+#include "BuildingSystem/Building.h"
 #include "Components/Button.h"
 
 

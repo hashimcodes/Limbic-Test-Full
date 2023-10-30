@@ -1,8 +1,8 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "Buildings/BuildingsController.h"
-#include "Buildings/Building.h"
+#include "BuildingSystem/BuildingsController.h"
+#include "BuildingSystem/Building.h"
 #include <Kismet/GameplayStatics.h>
 
 ABuildingsController::ABuildingsController()

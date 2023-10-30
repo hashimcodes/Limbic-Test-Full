@@ -6,7 +6,7 @@
 #include "UI/PlacementUI.h"
 #include "UI/BuildingSlotUI.h"
 #include "Components/HorizontalBox.h"
-#include "Buildings/BuildingsController.h"
+#include "BuildingSystem/BuildingsController.h"
 #include <Kismet/GameplayStatics.h>
 
 AUIManager::AUIManager()

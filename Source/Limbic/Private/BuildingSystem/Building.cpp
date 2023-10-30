@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "Buildings/Building.h"
+#include "BuildingSystem/Building.h"
 #include "Components/StaticMeshComponent.h"
 #include "Materials/MaterialInterface.h"
 #include "Components/BoxComponent.h"
@@ -21,7 +21,7 @@ ABuilding::ABuilding()
 	BoxComponent->OnComponentBeginOverlap.AddDynamic(this, &ABuilding::OnBoxBeginOverlap);
 	BoxComponent->OnComponentEndOverlap.AddDynamic(this, &ABuilding::OnBoxEndOverlap);
 
-	BuildingState = EBuildingState::EBS_NotYetBuilt;
+	BuildingState = EBuildingState::EBS_UnderConstruction;
 
 	GreenMaterial = CreateDefaultSubobject<UMaterialInterface>(TEXT("GreenMaterial"));
 	RedMaterial = CreateDefaultSubobject<UMaterialInterface>(TEXT("RedMaterial"));
@@ -36,7 +36,7 @@ void ABuilding::BeginPlay()
 
 void ABuilding::OnBoxBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	if (BuildingState == EBuildingState::EBS_NotYetBuilt)
+	if (BuildingState == EBuildingState::EBS_UnderConstruction)
 	{
 		StaticMeshComponent->SetMaterial(0, RedMaterial);
 	}

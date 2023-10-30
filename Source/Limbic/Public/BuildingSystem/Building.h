@@ -13,17 +13,9 @@ building class with customizable properties.*/
 //to manage how building will behave in different states
 enum class EBuildingState : uint8
 {
-	EBS_NotYetBuilt,
+	EBS_UnderConstruction,
 	EBS_Built,
 	EBS_Selected
-};
-
-//in case we want to sort or make categories based on buildings types
-enum class EBuildingType : uint8
-{
-	EBT_Resource,
-	EBT_Army,
-	EBT_Decor
 };
 
 UCLASS()
@@ -36,8 +28,6 @@ public:
 	FString BuildingName;
 
 	EBuildingState BuildingState;
-
-	EBuildingType BuildingType;
 
 	ABuilding();
 
