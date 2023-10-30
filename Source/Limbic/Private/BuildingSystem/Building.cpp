@@ -45,8 +45,8 @@ void ABuilding::OnBoxBeginOverlap(UPrimitiveComponent* OverlappedComponent, AAct
 
 void ABuilding::OnBoxEndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
 {
-	//based on building state the color will back to green (if player currently building it) or blue (if it already built) 
-	if (BuildingState == EBuildingState::EBS_Built) {
+	if (BuildingState == EBuildingState::EBS_Built) 
+	{
 		StaticMeshComponent->SetMaterial(0, BuildingColor);
 	}
 	else
@@ -58,13 +58,12 @@ void ABuilding::OnBoxEndOverlap(UPrimitiveComponent* OverlappedComponent, AActor
 
 void ABuilding::OnBuildingSelected()
 {
-	//Can be any functionality when building is selected (openening building abilities UMG for example)
+	if (BuildingState != EBuildingState::EBS_Built) return;
 	StaticMeshComponent->SetMaterial(0, GreenMaterial);
 }
 
 void ABuilding::OnBuildingDeselected()
 {
-	//Can be any functionality when building is selected (closing building abilities UMG for example)
 	StaticMeshComponent->SetMaterial(0, BuildingColor);
 }
 

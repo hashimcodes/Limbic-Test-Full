@@ -7,11 +7,6 @@
 #include "Interfaces/BuildingInterface.h"
 #include "Building.generated.h"
 
-/*From my perspective, I wanted to make an Interface called IBuilding, and each type of building
-implements the interface doing different functionality but for simplicity, I will go with one 
-building class with customizable properties.*/
-
-//to manage how building will behave in different states
 enum class EBuildingState : uint8
 {
 	EBS_UnderConstruction,

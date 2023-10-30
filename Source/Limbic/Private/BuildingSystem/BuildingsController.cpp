@@ -30,7 +30,7 @@ void ABuildingsController::Tick(float DeltaTime)
 		OnLeftMouseClicked();
 	}
 
-	if (PlayerController && PlayerController->WasInputKeyJustPressed(EKeys::D))
+	if (PlayerController && PlayerController->WasInputKeyJustPressed(EKeys::K))
 	{
 		DiscardBuilding();
 	}
@@ -44,7 +44,7 @@ void ABuildingsController::OnLeftMouseClicked()
 		BuildingToPlace = nullptr;
 	}
 
-	FHitResult Hit = GetMouseHit();
+	FHitResult Hit = GetMouseHit(ECollisionChannel::ECC_Pawn);
 	if (Hit.bBlockingHit)
 	{
 		if (SelectedBuilding)
@@ -69,12 +69,12 @@ void ABuildingsController::DiscardBuilding()
 	}
 }
 
-FHitResult ABuildingsController::GetMouseHit()
+FHitResult ABuildingsController::GetMouseHit(ECollisionChannel CollisionChannel)
 {
 	FHitResult Hit;
 	if (PlayerController)
 	{
-		PlayerController->GetHitResultUnderCursor(ECC_Pawn, false, Hit);
+		PlayerController->GetHitResultUnderCursor(CollisionChannel, false, Hit);
 	}
 	return Hit;
 }

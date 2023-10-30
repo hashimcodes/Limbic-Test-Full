@@ -38,7 +38,7 @@ private:
 	void DiscardBuilding();
 
 	UFUNCTION()
-	FHitResult GetMouseHit();
+	FHitResult GetMouseHit(ECollisionChannel CollisionChannel);
 
 	UFUNCTION()
 	FVector GetMousePlace();
