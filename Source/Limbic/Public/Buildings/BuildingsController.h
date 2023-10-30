@@ -29,7 +29,7 @@ protected:
 
 private:
 	UPROPERTY(VisibleAnywhere)
-	class AGameController* GameController;
+	class APlayerController* PlayerController;
 
 	UPROPERTY(VisibleAnywhere)
 	ABuilding* SelectedBuilding;
@@ -39,4 +39,10 @@ private:
 
 	UFUNCTION()
 	void DiscardBuilding();
+
+	UFUNCTION()
+	FHitResult GetMouseHit();
+
+	UFUNCTION()
+	FVector GetMousePlace();
 };

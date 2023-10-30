@@ -2,7 +2,6 @@
 
 
 #include "Buildings/BuildingsController.h"
-#include "Controllers/GameController.h"
 #include "Buildings/Building.h"
 #include <Kismet/GameplayStatics.h>
 
@@ -14,7 +13,7 @@ ABuildingsController::ABuildingsController()
 void ABuildingsController::BeginPlay()
 {
 	Super::BeginPlay();
-	GameController = Cast<AGameController>(UGameplayStatics::GetPlayerController(GetWorld(), 0));
+	PlayerController = UGameplayStatics::GetPlayerController(GetWorld(), 0);
 }
 
 void ABuildingsController::Tick(float DeltaTime)
@@ -23,18 +22,15 @@ void ABuildingsController::Tick(float DeltaTime)
 
 	if (BuildingToPlace)
 	{
-		if (GameController)
-		{
-			BuildingToPlace->SetActorLocation(GameController->GetMousePlace());
-		}
+		BuildingToPlace->SetActorLocation(GetMousePlace());
 	}
 
-	if (GameController && GameController->WasInputKeyJustPressed(EKeys::LeftMouseButton))
+	if (PlayerController && PlayerController->WasInputKeyJustPressed(EKeys::LeftMouseButton))
 	{
 		OnMouseClicked();
 	}
 
-	if (GameController && GameController->WasInputKeyJustPressed(EKeys::RightMouseButton))
+	if (PlayerController && PlayerController->WasInputKeyJustPressed(EKeys::RightMouseButton))
 	{
 		DiscardBuilding();
 	}
@@ -48,11 +44,7 @@ void ABuildingsController::OnMouseClicked()
 		BuildingToPlace = nullptr;
 	}
 
-	FHitResult Hit;
-	if (GameController)
-	{
-		Hit = GameController->GetMouseHit();
-	}
+	FHitResult Hit = GetMouseHit();
 	if (Hit.bBlockingHit)
 	{
 		if (SelectedBuilding)
@@ -77,6 +69,25 @@ void ABuildingsController::DiscardBuilding()
 	}
 }
 
+FHitResult ABuildingsController::GetMouseHit()
+{
+	FHitResult Hit;
+	if (PlayerController)
+	{
+		PlayerController->GetHitResultUnderCursor(ECC_Pawn, false, Hit);
+	}
+	return Hit;
+}
+
+FVector ABuildingsController::GetMousePlace()
+{
+	if (!PlayerController) return FVector::ZeroVector;
+	FVector worldLocation = FVector::ZeroVector;
+	FVector worldDirection= FVector::ZeroVector;
+	PlayerController->DeprojectMousePositionToWorld(worldLocation, worldDirection);
+	FVector mouseWorldLocation = worldLocation + (worldDirection * 1500.f);
+	return FVector(mouseWorldLocation.X, mouseWorldLocation.Y, 0.f);
+}
 
 void ABuildingsController::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {

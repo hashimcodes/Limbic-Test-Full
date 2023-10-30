@@ -26,10 +26,10 @@ ARTSCamera::ARTSCamera()
 void ARTSCamera::BeginPlay()
 {
 	Super::BeginPlay();
-	GameController = Cast<AGameController>(GetController());
-	if (GameController)
+	PlayerController = Cast<APlayerController>(GetController());
+	if (PlayerController)
 	{
-		GameController->GetViewportSize(ScreenSizeX, ScreenSizeY);
+		PlayerController->GetViewportSize(ScreenSizeX, ScreenSizeY);
 	}
 }
 
@@ -40,9 +40,9 @@ void ARTSCamera::MoveCameraOnEdges(float DeltaTime)
 	FVector xAxisDirection = FVector(0.f, CameraMoveSpeed * DeltaTime, 0.f);
 	FVector yAxisDirection = FVector(CameraMoveSpeed * DeltaTime, 0.f, 0.f);
 
-	if (GameController)
+	if (PlayerController)
 	{
-		GameController->GetMousePosition(mousePosX, mousePosY);
+		PlayerController->GetMousePosition(mousePosX, mousePosY);
 	}
 	else
 	{
@@ -102,16 +102,19 @@ void ARTSCamera::CameraDirectionalMove(const FVector& Direction)
 
 void ARTSCamera::RotateCamera(float DeltaTime)
 {
-	float mousePosX;
-	float mousePosY;
-	GameController->GetMousePosition(mousePosX, mousePosY);
+	float mousePosX = 0.f;
+	float mousePosY = 0.f;
+	float mouseDeltaX = 0.f;
+	float mouseDeltaY = 0.f;
+	float mouseDelta = 0.f;
 	float middleScreenSizeX = ScreenSizeX / static_cast<float>(2);
 	float middleScreenSizeY = ScreenSizeY / static_cast<float>(2);
+	if (PlayerController)
+	{
+		PlayerController->GetInputMouseDelta(mouseDeltaX, mouseDeltaY);
+		PlayerController->GetMousePosition(mousePosX, mousePosY);
+	}
 	if (abs(mousePosX - middleScreenSizeX) < 20 || abs(mousePosY - middleScreenSizeY) < 20) return;
-	float mouseDeltaX;
-	float mouseDeltaY;
-	GameController->GetInputMouseDelta(mouseDeltaX, mouseDeltaY);
-	float mouseDelta{};
 	if (mousePosX < middleScreenSizeX && mousePosY < middleScreenSizeY)
 	{
 		mouseDelta = -mouseDeltaX - mouseDeltaY;
@@ -145,7 +148,7 @@ void ARTSCamera::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 	MoveCameraOnEdges(DeltaTime);
-	if (GameController->IsInputKeyDown(EKeys::ThumbMouseButton2))
+	if (PlayerController && PlayerController->IsInputKeyDown(EKeys::ThumbMouseButton2))
 	{
 		RotateCamera(DeltaTime);
 	}

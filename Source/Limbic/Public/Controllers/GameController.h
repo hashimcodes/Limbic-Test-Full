@@ -13,13 +13,4 @@ class LIMBIC_API AGameController : public APlayerController
 
 public:
 	AGameController();
-
-	UPROPERTY(VisibleAnywhere)
-	class UPlacementUI* PlacementUI;
-
-	UFUNCTION()
-	FHitResult GetMouseHit();
-
-	UFUNCTION()
-	FVector GetMousePlace();
 };

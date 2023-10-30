@@ -48,13 +48,13 @@ private:
 	float CameraRotationSpeed = 200.f;
 
 	UPROPERTY()
-	int32 ScreenSizeX;
+	int32 ScreenSizeX = 0;
 
 	UPROPERTY()
-	int32 ScreenSizeY;
+	int32 ScreenSizeY = 0;
 
 	UPROPERTY()
-	class AGameController* GameController;
+	class APlayerController* PlayerController;
 
 	UFUNCTION()
 	void CameraDirectionalMove(const FVector& Direction);
