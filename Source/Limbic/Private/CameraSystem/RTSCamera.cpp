@@ -32,13 +32,21 @@ void ARTSCamera::BeginPlay()
 	}
 }
 
-void ARTSCamera::MoveCameraOnEdges(float DeltaTime)
+void ARTSCamera::Tick(float DeltaTime)
 {
-	float mousePosX{};
-	float mousePosY{};
-	FVector xAxisDirection = FVector(0.f, CameraMoveSpeed * DeltaTime, 0.f);
-	FVector yAxisDirection = FVector(CameraMoveSpeed * DeltaTime, 0.f, 0.f);
+	Super::Tick(DeltaTime);
 
+	const FVector2D mousePosition = GetMousePosition();
+	if (IsCursurOnEdges(mousePosition))
+	{
+		MoveCameraOnEdges(mousePosition);
+	}
+}
+
+const FVector2D ARTSCamera::GetMousePosition()
+{
+	float mousePosX = 0.f;
+	float mousePosY = 0.f;
 	if (PlayerController)
 	{
 		PlayerController->GetMousePosition(mousePosX, mousePosY);
@@ -49,47 +57,54 @@ void ARTSCamera::MoveCameraOnEdges(float DeltaTime)
 		{
 			GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Red, TEXT("Null Player Controller"));
 		}
-		return;
+		return FVector2D(0.f, 0.f);
 	}
+	return FVector2D(mousePosX, mousePosY);
+}
+
+bool ARTSCamera::IsCursurOnEdges(const FVector2D& MousePosiiton)
+{
+	if (MousePosiiton == FVector2D::ZeroVector)
+	{
+		return false;
+	}
+	return MousePosiiton.X <= CameraEdgesMargin || 
+		MousePosiiton.X >= ScreenSizeX - CameraEdgesMargin ||
+		MousePosiiton.Y <= CameraEdgesMargin ||
+		MousePosiiton.Y >= ScreenSizeY - CameraEdgesMargin;
+}
+
+void ARTSCamera::MoveCameraOnEdges(const FVector2D& MousePosiiton)
+{
+	FVector xAxisDirection = FVector(0.f, CameraMoveSpeed * FApp::GetDeltaTime(), 0.f);
+	FVector yAxisDirection = FVector(CameraMoveSpeed * FApp::GetDeltaTime(), 0.f, 0.f);
 
 	//Left and Right
-	if (mousePosX <= CameraEdgesMargin)
+	if (MousePosiiton.X <= CameraEdgesMargin)
 	{
 		CameraDirectionalMove(-xAxisDirection);
 	}
-	if (mousePosX >= ScreenSizeX - CameraEdgesMargin)
+	if (MousePosiiton.X >= ScreenSizeX - CameraEdgesMargin)
 	{
 		CameraDirectionalMove(xAxisDirection);
 	}
 	//Top and Down
-	if (mousePosY <= CameraEdgesMargin)
+	if (MousePosiiton.Y <= CameraEdgesMargin)
 	{	
 		CameraDirectionalMove(yAxisDirection);
 	}
-	if (mousePosY >= ScreenSizeY - CameraEdgesMargin)
+	if (MousePosiiton.Y >= ScreenSizeY - CameraEdgesMargin)
 	{
 		CameraDirectionalMove(-yAxisDirection);
 	}
 }
 
-void ARTSCamera::CameraMoveOnX(float Value)
+void ARTSCamera::CameraMove(const FVector2D& Value)
 {
-	if (Value == 0) return;
 	FVector xAxisDirection = FVector(0.f, CameraMoveSpeed * FApp::GetDeltaTime(), 0.f);
-	CameraDirectionalMove(Value * xAxisDirection);
-}
-
-void ARTSCamera::CameraMoveOnY(float Value)
-{
-	if (Value == 0) return;
 	FVector yAxisDirection = FVector(CameraMoveSpeed * FApp::GetDeltaTime(), 0.f, 0.f);
-	CameraDirectionalMove(Value * yAxisDirection);
-}
-
-void ARTSCamera::CameraZoomHandler(float Value)
-{
-	if (Value == 0) return;
-	SpringArm->TargetArmLength = FMath::Clamp(SpringArm->TargetArmLength -= (Value * CameraZoomSpeed), ZoomMinValue, ZoomMaxValue);
+	CameraDirectionalMove(Value.X * xAxisDirection);
+	CameraDirectionalMove(Value.Y * yAxisDirection);
 }
 
 void ARTSCamera::CameraDirectionalMove(const FVector& Direction)
@@ -99,7 +114,7 @@ void ARTSCamera::CameraDirectionalMove(const FVector& Direction)
 	SetActorLocation(newActorLocation);
 }
 
-void ARTSCamera::RotateCamera(float DeltaTime)
+void ARTSCamera::CameraRotation()
 {
 	float mousePosX = 0.f;
 	float mousePosY = 0.f;
@@ -113,7 +128,10 @@ void ARTSCamera::RotateCamera(float DeltaTime)
 		PlayerController->GetInputMouseDelta(mouseDeltaX, mouseDeltaY);
 		PlayerController->GetMousePosition(mousePosX, mousePosY);
 	}
-	if (abs(mousePosX - middleScreenSizeX) < 20 || abs(mousePosY - middleScreenSizeY) < 20) return;
+	if (abs(mousePosX - middleScreenSizeX) < 20 || abs(mousePosY - middleScreenSizeY) < 20)
+	{
+		return;
+	}
 	if (mousePosX < middleScreenSizeX && mousePosY < middleScreenSizeY)
 	{
 		mouseDelta = -mouseDeltaX - mouseDeltaY;
@@ -130,25 +148,12 @@ void ARTSCamera::RotateCamera(float DeltaTime)
 	{
 		mouseDelta = mouseDeltaX + mouseDeltaY;
 	}
-	float yawModifier = CameraRotationSpeed * DeltaTime * mouseDelta;
+	float yawModifier = CameraRotationSpeed * FApp::GetDeltaTime() * mouseDelta;
 	FRotator newActorRotation = FRotator(GetActorRotation().Pitch, GetActorRotation().Yaw + yawModifier, GetActorRotation().Roll);
 	SetActorRotation(newActorRotation);
 }
 
-void ARTSCamera::Tick(float DeltaTime)
+void ARTSCamera::CameraZoom(float Value)
 {
-	Super::Tick(DeltaTime);
-	MoveCameraOnEdges(DeltaTime);
-	if (PlayerController && PlayerController->IsInputKeyDown(EKeys::ThumbMouseButton2))
-	{
-		RotateCamera(DeltaTime);
-	}
-}
-
-void ARTSCamera::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
-{
-	Super::SetupPlayerInputComponent(PlayerInputComponent);
-	PlayerInputComponent->BindAxis(FName("LeftRight"), this, &ARTSCamera::CameraMoveOnX);
-	PlayerInputComponent->BindAxis(FName("UpDown"), this, &ARTSCamera::CameraMoveOnY);
-	PlayerInputComponent->BindAxis(FName("MouseWheel"), this, &ARTSCamera::CameraZoomHandler);
+	SpringArm->TargetArmLength = FMath::Clamp(SpringArm->TargetArmLength -= (Value * CameraZoomSpeed), ZoomMinValue, ZoomMaxValue);
 }

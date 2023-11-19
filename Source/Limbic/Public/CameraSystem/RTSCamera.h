@@ -14,7 +14,15 @@ class LIMBIC_API ARTSCamera : public APawn
 public:
 	ARTSCamera();
 	virtual void Tick(float DeltaTime) override;
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+
+	UFUNCTION()
+	void CameraMove(const FVector2D& Value);
+
+	UFUNCTION()
+	void CameraRotation();
+
+	UFUNCTION()
+	void CameraZoom(float Value);
 
 protected:
 	virtual void BeginPlay() override;
@@ -54,23 +62,17 @@ private:
 	int32 ScreenSizeY = 0;
 
 	UPROPERTY()
-	class APlayerController* PlayerController;
+	class APlayerController* PlayerController = nullptr;
 
 	UFUNCTION()
 	void CameraDirectionalMove(const FVector& Direction);
 
 	UFUNCTION()
-	void MoveCameraOnEdges(float DeltaTime);
+	const FVector2D GetMousePosition();
 
 	UFUNCTION()
-	void CameraMoveOnX(float Value);
+	void MoveCameraOnEdges(const FVector2D& MousePosiiton);
 
 	UFUNCTION()
-	void CameraMoveOnY(float Value);
-
-	UFUNCTION()
-	void CameraZoomHandler(float Value);
-
-	UFUNCTION()
-	void RotateCamera(float DeltaTime);
+	bool IsCursurOnEdges(const FVector2D& MousePosiiton);
 };
