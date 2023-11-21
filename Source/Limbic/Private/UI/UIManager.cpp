@@ -7,7 +7,6 @@
 #include "UI/BuildingSlotUI.h"
 #include "Components/HorizontalBox.h"
 #include "BuildingSystem/BuildingsController.h"
-#include <Kismet/GameplayStatics.h>
 
 AUIManager::AUIManager()
 {
@@ -18,17 +17,17 @@ AUIManager::AUIManager()
 void AUIManager::BeginPlay()
 {
 	Super::BeginPlay();
-	
-	PlayerController = UGameplayStatics::GetPlayerController(GetWorld(), 0);
 
+	PlayerController = GetOwningPlayerController();
+	BuildingsController = GetWorld()->SpawnActor<ABuildingsController>();
 	PlacementUW = Cast<UPlacementUI>(CreateWidget(GetWorld(), PlacementWBP));
 	if (PlacementUW)
 	{
-		for (int i = 0; i < BuildingList.Num(); i++)
+		for (auto& building : BuildingList)
 		{
 			UBuildingSlotUI* BuildingSlotUW = Cast<UBuildingSlotUI>(CreateWidget(GetWorld(), BuildingSlotWBP));
 			BuildingSlotUW->BuildingsController = BuildingsController;
-			BuildingSlotUW->Building = BuildingList[i];
+			BuildingSlotUW->Building = building;
 			PlacementUW->BuildingsListUI->AddChild(BuildingSlotUW);
 		}
 		PlacementUW->AddToViewport();
@@ -38,6 +37,7 @@ void AUIManager::BeginPlay()
 void AUIManager::Tick(float DeltaTime)
 {
 	// can be replaced with delegate broadcast from the player controller
+	// or having reference for this in player controller then I can bind this function
 	if (PlayerController && PlayerController->WasInputKeyJustPressed(EKeys::RightMouseButton))
 	{
 		OnMouseRightClicked();

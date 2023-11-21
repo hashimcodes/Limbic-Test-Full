@@ -3,33 +3,33 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameFramework/PlayerController.h"
+#include "GameFramework/Actor.h"
 #include "BuildingsController.generated.h"
 
 class ABuilding;
+class APlayerController;
 
 UCLASS()
-class LIMBIC_API ABuildingsController : public APawn
+class LIMBIC_API ABuildingsController : public AActor
 {
 	GENERATED_BODY()
 
 public:
 	ABuildingsController();
 	virtual void Tick(float DeltaTime) override;
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	UPROPERTY(VisibleAnywhere)
-	ABuilding* BuildingToPlace;
+	TObjectPtr<ABuilding> BuildingToPlace;
 
 protected:
 	virtual void BeginPlay() override;
 
 private:
 	UPROPERTY(VisibleAnywhere)
-	class APlayerController* PlayerController;
+	TObjectPtr<APlayerController> PlayerController;
 
 	UPROPERTY(VisibleAnywhere)
-	ABuilding* SelectedBuilding;
+	TObjectPtr<ABuilding> SelectedBuilding;
 
 	UFUNCTION()
 	void OnLeftMouseClicked();

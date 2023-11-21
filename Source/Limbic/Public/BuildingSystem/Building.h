@@ -57,18 +57,18 @@ private:
 	UPROPERTY(VisibleAnywhere)
 	TArray<TObjectPtr<ABuilding>> CurrentCollidingBuildings;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditDefaultsOnly)
 	UStaticMeshComponent* StaticMeshComponent;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditDefaultsOnly)
 	UBoxComponent* BoxComponent;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditDefaultsOnly)
 	UMaterialInterface* GreenMaterial;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditDefaultsOnly)
 	UMaterialInterface* RedMaterial;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditDefaultsOnly)
 	UMaterialInterface* BuildingColor;
 };

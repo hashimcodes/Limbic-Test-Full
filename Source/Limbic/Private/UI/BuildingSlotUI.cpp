@@ -14,9 +14,9 @@ void UBuildingSlotUI::NativeConstruct()
 
 void UBuildingSlotUI::OnSlotButtonClicked()
 {
-	ABuilding* building = GetWorld()->SpawnActor<ABuilding>(Building);
-	if (BuildingsController)
+	if (BuildingsController && BuildingsController->BuildingToPlace == nullptr)
 	{
+		ABuilding* building = GetWorld()->SpawnActor<ABuilding>(Building);
 		BuildingsController->BuildingToPlace = building;
 	}
 }

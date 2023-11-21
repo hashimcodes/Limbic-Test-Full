@@ -3,11 +3,11 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameFramework/Actor.h"
+#include "GameFramework/HUD.h"
 #include "UIManager.generated.h"
 
-UCLASS()
-class LIMBIC_API AUIManager : public AActor
+UCLASS(Abstract)
+class LIMBIC_API AUIManager : public AHUD
 {
 	GENERATED_BODY()
 	
@@ -26,16 +26,16 @@ private:
 	class APlayerController* PlayerController;
 
 	UPROPERTY(VisibleAnywhere)
+	class ABuildingsController* BuildingsController;
+
+	UPROPERTY(VisibleAnywhere)
 	class UPlacementUI* PlacementUW;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<class UPlacementUI> PlacementWBP;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<class UBuildingSlotUI> BuildingSlotWBP;
-
-	UPROPERTY(EditAnywhere)
-	class ABuildingsController* BuildingsController;
 
 	UFUNCTION()
 	void OnMouseRightClicked();

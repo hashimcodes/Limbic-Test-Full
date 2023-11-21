@@ -16,9 +16,9 @@ ABuilding::ABuilding()
 	BoxComponent = CreateDefaultSubobject<UBoxComponent>(TEXT("BoxComponent"));
 	BoxComponent->SetupAttachment(GetRootComponent());
 	BoxComponent->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
-	BoxComponent->SetCollisionObjectType(ECollisionChannel::ECC_WorldStatic);
+	BoxComponent->SetCollisionObjectType(ECollisionChannel::ECC_Pawn);
 	BoxComponent->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Block);
-	BoxComponent->SetCollisionResponseToChannel(ECollisionChannel::ECC_WorldStatic, ECR_Overlap);
+	BoxComponent->SetCollisionResponseToChannel(ECollisionChannel::ECC_Pawn, ECR_Overlap);
 	BoxComponent->SetGenerateOverlapEvents(true);
 	BoxComponent->OnComponentBeginOverlap.AddDynamic(this, &ABuilding::OnBoxBeginOverlap);
 	BoxComponent->OnComponentEndOverlap.AddDynamic(this, &ABuilding::OnBoxEndOverlap);

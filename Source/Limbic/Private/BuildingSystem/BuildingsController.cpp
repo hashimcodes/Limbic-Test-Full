@@ -55,8 +55,7 @@ void ABuildingsController::OnLeftMouseClicked()
 				building->OnBuildingSelected();
 			}
 		}
-	}
-	if (BuildingToPlace && BuildingToPlace->CanBePlaced())
+	} else if (BuildingToPlace && BuildingToPlace->CanBePlaced())
 	{
 		BuildingToPlace->PlaceBuilding();
 		BuildingToPlace = nullptr;
@@ -83,16 +82,13 @@ FHitResult ABuildingsController::GetMouseHit(ECollisionChannel CollisionChannel)
 
 FVector ABuildingsController::GetMousePlace()
 {
-	if (!PlayerController) return FVector::ZeroVector;
+	if (!PlayerController)
+	{
+		return FVector::ZeroVector;
+	}
 	FVector worldLocation = FVector::ZeroVector;
 	FVector worldDirection= FVector::ZeroVector;
 	PlayerController->DeprojectMousePositionToWorld(worldLocation, worldDirection);
 	FVector mouseWorldLocation = worldLocation + (worldDirection * 1500.f);
 	return FVector(mouseWorldLocation.X, mouseWorldLocation.Y, 0.f);
 }
-
-void ABuildingsController::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
-{
-	Super::SetupPlayerInputComponent(PlayerInputComponent);
-}
-
