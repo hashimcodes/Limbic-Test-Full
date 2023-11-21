@@ -60,8 +60,9 @@ void AMainPlayer::Move(const FVector2D& Value)
 		const FRotator YawRotation(0, Rotation.Yaw, 0);
 		const FVector DirectionX = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
 		const FVector DirectionY = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
-		AddMovementInput(DirectionX, Value.X * CameraMoveSpeed);
-		AddMovementInput(DirectionY, Value.Y * CameraMoveSpeed);
+		// Speed depending on MovementComponent speed parms
+		AddMovementInput(DirectionX, Value.X);
+		AddMovementInput(DirectionY, Value.Y);
 	}
 }
 
