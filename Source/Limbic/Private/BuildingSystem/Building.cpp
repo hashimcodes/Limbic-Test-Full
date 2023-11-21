@@ -15,8 +15,10 @@ ABuilding::ABuilding()
 
 	BoxComponent = CreateDefaultSubobject<UBoxComponent>(TEXT("BoxComponent"));
 	BoxComponent->SetupAttachment(GetRootComponent());
-	BoxComponent->SetCollisionResponseToAllChannels(ECR_Block);
-	BoxComponent->SetCollisionResponseToChannel(ECC_Pawn, ECR_Overlap);
+	BoxComponent->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
+	BoxComponent->SetCollisionObjectType(ECollisionChannel::ECC_WorldStatic);
+	BoxComponent->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Block);
+	BoxComponent->SetCollisionResponseToChannel(ECollisionChannel::ECC_WorldStatic, ECR_Overlap);
 	BoxComponent->SetGenerateOverlapEvents(true);
 	BoxComponent->OnComponentBeginOverlap.AddDynamic(this, &ABuilding::OnBoxBeginOverlap);
 	BoxComponent->OnComponentEndOverlap.AddDynamic(this, &ABuilding::OnBoxEndOverlap);
@@ -39,21 +41,28 @@ void ABuilding::OnBoxBeginOverlap(UPrimitiveComponent* OverlappedComponent, AAct
 	if (BuildingState == EBuildingState::EBS_UnderConstruction)
 	{
 		StaticMeshComponent->SetMaterial(0, RedMaterial);
+		TObjectPtr<ABuilding> CollidingBuilding = Cast<ABuilding>(OtherActor);
+		if (CollidingBuilding)
+		{
+			CurrentCollidingBuildings.Add(CollidingBuilding);
+		}
 	}
-	bCollidesWithOtherBuilding = true;
 }
 
 void ABuilding::OnBoxEndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
 {
-	if (BuildingState == EBuildingState::EBS_Built) 
+	if (BuildingState == EBuildingState::EBS_UnderConstruction)
 	{
-		StaticMeshComponent->SetMaterial(0, BuildingColor);
+		TObjectPtr<ABuilding> CollidingBuilding = Cast<ABuilding>(OtherActor);
+		if (CollidingBuilding)
+		{
+			CurrentCollidingBuildings.Remove(CollidingBuilding);
+		}
+		if (CanBePlaced())
+		{
+			StaticMeshComponent->SetMaterial(0, GreenMaterial);
+		}
 	}
-	else
-	{
-		StaticMeshComponent->SetMaterial(0, GreenMaterial);
-	}
-	bCollidesWithOtherBuilding = false;
 }
 
 void ABuilding::OnBuildingSelected()
@@ -69,7 +78,7 @@ void ABuilding::OnBuildingDeselected()
 
 bool ABuilding::CanBePlaced()
 {
-	return !bCollidesWithOtherBuilding;
+	return CurrentCollidingBuildings.IsEmpty();
 }
 
 void ABuilding::PlaceBuilding()

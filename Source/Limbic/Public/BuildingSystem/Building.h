@@ -7,6 +7,12 @@
 #include "Interfaces/BuildingInterface.h"
 #include "Building.generated.h"
 
+// Forward Declerations
+class ABuilding;
+class UStaticMeshComponent;
+class UBoxComponent;
+class UMaterialInterface;
+
 enum class EBuildingState : uint8
 {
 	EBS_UnderConstruction,
@@ -49,20 +55,20 @@ protected:
 
 private:
 	UPROPERTY(VisibleAnywhere)
-	bool bCollidesWithOtherBuilding = false;
+	TArray<TObjectPtr<ABuilding>> CurrentCollidingBuildings;
 
 	UPROPERTY(EditAnywhere)
-	class UStaticMeshComponent* StaticMeshComponent;
+	UStaticMeshComponent* StaticMeshComponent;
 
 	UPROPERTY(EditAnywhere)
-	class UBoxComponent* BoxComponent;
+	UBoxComponent* BoxComponent;
 
 	UPROPERTY(EditAnywhere)
-	class UMaterialInterface* GreenMaterial;
+	UMaterialInterface* GreenMaterial;
 
 	UPROPERTY(EditAnywhere)
-	class UMaterialInterface* RedMaterial;
+	UMaterialInterface* RedMaterial;
 
 	UPROPERTY(EditAnywhere)
-	class UMaterialInterface* BuildingColor;
+	UMaterialInterface* BuildingColor;
 };

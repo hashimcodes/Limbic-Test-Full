@@ -38,26 +38,28 @@ void ABuildingsController::Tick(float DeltaTime)
 
 void ABuildingsController::OnLeftMouseClicked()
 {
+	if (!BuildingToPlace)
+	{
+		FHitResult Hit = GetMouseHit(ECollisionChannel::ECC_Pawn);
+		if (Hit.bBlockingHit)
+		{
+			if (SelectedBuilding)
+			{
+				SelectedBuilding->OnBuildingDeselected();
+			}
+
+			ABuilding* building = Cast<ABuilding>(Hit.GetActor());
+			if (building)
+			{
+				SelectedBuilding = building;
+				building->OnBuildingSelected();
+			}
+		}
+	}
 	if (BuildingToPlace && BuildingToPlace->CanBePlaced())
 	{
 		BuildingToPlace->PlaceBuilding();
 		BuildingToPlace = nullptr;
-	}
-
-	FHitResult Hit = GetMouseHit(ECollisionChannel::ECC_Pawn);
-	if (Hit.bBlockingHit)
-	{
-		if (SelectedBuilding)
-		{
-			SelectedBuilding->OnBuildingDeselected();
-		}
-
-		ABuilding* building = Cast<ABuilding>(Hit.GetActor());
-		if (building)
-		{
-			SelectedBuilding = building;
-			building->OnBuildingSelected();
-		}
 	}
 }
 
