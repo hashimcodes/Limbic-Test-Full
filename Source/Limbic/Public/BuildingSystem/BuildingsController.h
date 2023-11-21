@@ -6,6 +6,7 @@
 #include "GameFramework/Actor.h"
 #include "BuildingsController.generated.h"
 
+// Forward Declarations
 class ABuilding;
 class APlayerController;
 

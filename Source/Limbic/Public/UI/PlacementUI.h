@@ -6,16 +6,20 @@
 #include "Blueprint/UserWidget.h"
 #include "PlacementUI.generated.h"
 
+// Forward Declarations
+class UHorizontalBox;
+class UButton;
+
 UCLASS()
 class LIMBIC_API UPlacementUI : public UUserWidget
 {
 	GENERATED_BODY()	
 public:
 	UPROPERTY(meta = (BindWidget))
-	class UHorizontalBox* BuildingsListUI;
+	TObjectPtr<UHorizontalBox> BuildingsListUI;
 
 	UPROPERTY(meta = (BindWidget))
-	class UButton* PlacementButton;
+	TObjectPtr<UButton> PlacementButton;
 
 protected:
 	virtual void NativeConstruct() override;

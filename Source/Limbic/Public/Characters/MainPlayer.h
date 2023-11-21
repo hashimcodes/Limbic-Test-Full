@@ -6,6 +6,7 @@
 #include "GameFramework/Pawn.h"
 #include "MainPlayer.generated.h"
 
+// Forward Declarations
 class USpringArmComponent;
 class UCameraComponent;
 class APlayerController;
@@ -36,13 +37,16 @@ protected:
 private:
 
 	UPROPERTY(VisibleAnywhere)
-	USpringArmComponent* SpringArm;
+	TObjectPtr<USpringArmComponent> SpringArm;
 
 	UPROPERTY(VisibleAnywhere)
-	UCameraComponent* Camera;
+	TObjectPtr<UCameraComponent> Camera;
 
 	UPROPERTY(VisibleAnywhere)
-	UFloatingPawnMovement* MovementComponent;
+	TObjectPtr<UFloatingPawnMovement> MovementComponent;
+
+	UPROPERTY()
+	TObjectPtr<APlayerController> PlayerController = nullptr;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Camera Props")
 	float CameraMoveSpeed = 1000.f;
@@ -67,9 +71,6 @@ private:
 
 	UPROPERTY()
 	int32 ScreenSizeY = 0;
-
-	UPROPERTY()
-	APlayerController* PlayerController = nullptr;
 
 	UFUNCTION()
 	const FVector2D GetMousePosition();

@@ -6,6 +6,13 @@
 #include "GameFramework/HUD.h"
 #include "UIManager.generated.h"
 
+// Forward Declarations
+class ABuilding;
+class APlayerController;
+class ABuildingsController;
+class UPlacementUI;
+class UBuildingSlotUI;
+
 UCLASS(Abstract)
 class LIMBIC_API AUIManager : public AHUD
 {
@@ -16,26 +23,26 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	UPROPERTY(EditDefaultsOnly)
-	TArray<TSubclassOf<class ABuilding>> BuildingList;
+	TArray<TSubclassOf<ABuilding>> BuildingList;
 
 protected:
 	virtual void BeginPlay() override;
 
 private:
 	UPROPERTY(VisibleAnywhere)
-	class APlayerController* PlayerController;
+	TObjectPtr<APlayerController> PlayerController;
 
 	UPROPERTY(VisibleAnywhere)
-	class ABuildingsController* BuildingsController;
+	TObjectPtr<ABuildingsController> BuildingsController;
 
 	UPROPERTY(VisibleAnywhere)
-	class UPlacementUI* PlacementUW;
+	TObjectPtr<UPlacementUI> PlacementUW;
 
 	UPROPERTY(EditDefaultsOnly)
-	TSubclassOf<class UPlacementUI> PlacementWBP;
+	TSubclassOf<UPlacementUI> PlacementWBP;
 
 	UPROPERTY(EditDefaultsOnly)
-	TSubclassOf<class UBuildingSlotUI> BuildingSlotWBP;
+	TSubclassOf<UBuildingSlotUI> BuildingSlotWBP;
 
 	UFUNCTION()
 	void OnMouseRightClicked();

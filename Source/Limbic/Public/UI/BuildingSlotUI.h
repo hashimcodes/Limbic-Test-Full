@@ -6,6 +6,12 @@
 #include "Blueprint/UserWidget.h"
 #include "BuildingSlotUI.generated.h"
 
+// Forward Declarations
+class UButton;
+class UTextBlock;
+class ABuildingsController;
+class ABuilding;
+
 UCLASS()
 class LIMBIC_API UBuildingSlotUI : public UUserWidget
 {
@@ -13,16 +19,16 @@ class LIMBIC_API UBuildingSlotUI : public UUserWidget
 
 public:
 	UPROPERTY(meta = (BindWidget))
-	class UButton* SlotButton;
+	TObjectPtr<UButton> SlotButton;
 
 	UPROPERTY(meta = (BindWidget))
-	class UTextBlock* BuildingName;
+	TObjectPtr<UTextBlock> BuildingName;
 
 	UPROPERTY(EditAnywhere)
-	class ABuildingsController* BuildingsController;
+	TObjectPtr<ABuildingsController> BuildingsController;
 
 	UPROPERTY()
-	TSubclassOf<class ABuilding> Building;
+	TSubclassOf<ABuilding> Building;
 
 protected:
 	virtual void NativeConstruct() override;

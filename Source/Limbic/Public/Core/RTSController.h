@@ -6,7 +6,7 @@
 #include "GameFramework/PlayerController.h"
 #include "RTSController.generated.h"
 
-// Forward Declerations
+// Forward Declarations
 class AMainPlayer;
 class UEnhancedInputComponent;
 class UInputMappingContext;
@@ -22,16 +22,16 @@ public:
 	ARTSController();
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Player Input")
-	UInputAction* ActionMove = nullptr;
+	TObjectPtr<UInputAction> ActionMove = nullptr;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Player Input")
-	UInputAction* ActionRotate = nullptr;
+	TObjectPtr<UInputAction> ActionRotate = nullptr;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Player Input")
-	UInputAction* ActionZoom = nullptr;
+	TObjectPtr<UInputAction> ActionZoom = nullptr;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Player Input")
-	UInputMappingContext* InputMappingContext = nullptr;
+	TObjectPtr<UInputMappingContext> InputMappingContext = nullptr;
 
 protected:
 	virtual void OnPossess(APawn* aPawn) override;
@@ -42,9 +42,8 @@ protected:
 
 private:
 	UPROPERTY()
-	AMainPlayer* MainPlayer = nullptr;
+	TObjectPtr<AMainPlayer> MainPlayer = nullptr;
 
 	UPROPERTY()
-	UEnhancedInputComponent* EnhancedInputComponent = nullptr;
-	
+	TObjectPtr<UEnhancedInputComponent> EnhancedInputComponent = nullptr;
 };

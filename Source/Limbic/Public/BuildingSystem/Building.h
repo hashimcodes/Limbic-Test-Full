@@ -7,8 +7,7 @@
 #include "Interfaces/BuildingInterface.h"
 #include "Building.generated.h"
 
-// Forward Declerations
-class ABuilding;
+// Forward Declarations
 class UStaticMeshComponent;
 class UBoxComponent;
 class UMaterialInterface;
@@ -16,7 +15,7 @@ class UMaterialInterface;
 enum class EBuildingState : uint8
 {
 	EBS_UnderConstruction,
-	EBS_Built,
+	EBS_Built
 };
 
 UCLASS()
@@ -25,11 +24,6 @@ class LIMBIC_API ABuilding : public AActor, public IBuildingInterface
 	GENERATED_BODY()
 	
 public:	
-	UPROPERTY(EditAnywhere)
-	FString BuildingName;
-
-	EBuildingState BuildingState;
-
 	ABuilding();
 
 	UFUNCTION()
@@ -54,21 +48,26 @@ protected:
 	void OnBoxEndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
 
 private:
+	UPROPERTY(EditDefaultsOnly)
+	FString BuildingName;
+
+	EBuildingState BuildingState;
+
 	UPROPERTY(VisibleAnywhere)
 	TArray<TObjectPtr<ABuilding>> CurrentCollidingBuildings;
 
 	UPROPERTY(EditDefaultsOnly)
-	UStaticMeshComponent* StaticMeshComponent;
+	TObjectPtr<UStaticMeshComponent> StaticMeshComponent;
 
 	UPROPERTY(EditDefaultsOnly)
-	UBoxComponent* BoxComponent;
+	TObjectPtr<UBoxComponent> BoxComponent;
 
 	UPROPERTY(EditDefaultsOnly)
-	UMaterialInterface* GreenMaterial;
+	TObjectPtr<UMaterialInterface> GreenMaterial;
 
 	UPROPERTY(EditDefaultsOnly)
-	UMaterialInterface* RedMaterial;
+	TObjectPtr<UMaterialInterface> RedMaterial;
 
 	UPROPERTY(EditDefaultsOnly)
-	UMaterialInterface* BuildingColor;
+	TObjectPtr<UMaterialInterface> BuildingColor;
 };

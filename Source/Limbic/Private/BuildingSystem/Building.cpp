@@ -41,7 +41,7 @@ void ABuilding::OnBoxBeginOverlap(UPrimitiveComponent* OverlappedComponent, AAct
 	if (BuildingState == EBuildingState::EBS_UnderConstruction)
 	{
 		StaticMeshComponent->SetMaterial(0, RedMaterial);
-		TObjectPtr<ABuilding> CollidingBuilding = Cast<ABuilding>(OtherActor);
+		ABuilding* CollidingBuilding = Cast<ABuilding>(OtherActor);
 		if (CollidingBuilding)
 		{
 			CurrentCollidingBuildings.Add(CollidingBuilding);
@@ -53,7 +53,7 @@ void ABuilding::OnBoxEndOverlap(UPrimitiveComponent* OverlappedComponent, AActor
 {
 	if (BuildingState == EBuildingState::EBS_UnderConstruction)
 	{
-		TObjectPtr<ABuilding> CollidingBuilding = Cast<ABuilding>(OtherActor);
+		ABuilding* CollidingBuilding = Cast<ABuilding>(OtherActor);
 		if (CollidingBuilding)
 		{
 			CurrentCollidingBuildings.Remove(CollidingBuilding);
