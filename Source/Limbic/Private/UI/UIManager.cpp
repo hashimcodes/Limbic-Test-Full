@@ -12,6 +12,7 @@
 AUIManager::AUIManager()
 {
 	PrimaryActorTick.bCanEverTick = true;
+	SetActorTickInterval(2.f);
 }
 
 void AUIManager::BeginPlay()
@@ -36,7 +37,7 @@ void AUIManager::BeginPlay()
 
 void AUIManager::Tick(float DeltaTime)
 {
-	
+	// can be replaced with delegate broadcast from the player controller
 	if (PlayerController && PlayerController->WasInputKeyJustPressed(EKeys::RightMouseButton))
 	{
 		OnMouseRightClicked();
@@ -47,11 +48,7 @@ void AUIManager::OnMouseRightClicked()
 {
 	if (PlacementUW)
 	{
-		if (PlacementUW->BuildingsListUI->GetParent()->GetIsEnabled())
-		{
-			PlacementUW->BuildingsListUI->GetParent()->SetIsEnabled(false);
-			PlacementUW->BuildingsListUI->GetParent()->SetVisibility(ESlateVisibility::Hidden);
-		}
+		PlacementUW->BuildingsListUI->GetParent()->SetVisibility(ESlateVisibility::Collapsed);
 	}
 }
 

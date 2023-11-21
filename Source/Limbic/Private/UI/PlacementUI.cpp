@@ -8,11 +8,8 @@
 void UPlacementUI::NativeConstruct()
 {
 	Super::NativeConstruct();
-	if (BuildingsListUI->GetParent())
-	{
-		BuildingsListUI->GetParent()->SetIsEnabled(false);
-		BuildingsListUI->GetParent()->SetVisibility(ESlateVisibility::Hidden);
-	}
+
+	BuildingsListUI->GetParent()->SetVisibility(ESlateVisibility::Collapsed);
 
 	if (PlacementButton)
 	{
@@ -22,15 +19,6 @@ void UPlacementUI::NativeConstruct()
 
 void UPlacementUI::OnPlacementButtonClicked()
 {
-	if (BuildingsListUI->GetParent()->GetIsEnabled())
-	{
-		BuildingsListUI->GetParent()->SetIsEnabled(false);
-		BuildingsListUI->GetParent()->SetVisibility(ESlateVisibility::Hidden);
-	}
-	else
-	{
-		BuildingsListUI->GetParent()->SetIsEnabled(true);
-		BuildingsListUI->GetParent()->SetVisibility(ESlateVisibility::Visible);
-	}
+	BuildingsListUI->GetParent()->SetVisibility(ESlateVisibility::Visible);
 }
 
