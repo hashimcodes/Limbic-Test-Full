@@ -3,15 +3,16 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameFramework/Character.h"
+#include "GameFramework/Pawn.h"
 #include "MainPlayer.generated.h"
 
 class USpringArmComponent;
 class UCameraComponent;
 class APlayerController;
+class UFloatingPawnMovement;
 
 UCLASS()
-class LIMBIC_API AMainPlayer : public ACharacter
+class LIMBIC_API AMainPlayer : public APawn
 {
 	GENERATED_BODY()
 
@@ -39,6 +40,9 @@ private:
 
 	UPROPERTY(VisibleAnywhere)
 	UCameraComponent* Camera;
+
+	UPROPERTY(VisibleAnywhere)
+	UFloatingPawnMovement* MovementComponent;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Camera Props")
 	float CameraMoveSpeed = 1000.f;
