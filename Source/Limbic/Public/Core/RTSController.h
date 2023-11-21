@@ -7,7 +7,7 @@
 #include "RTSController.generated.h"
 
 // Forward Declerations
-class ARTSCamera;
+class AMainPlayer;
 class UEnhancedInputComponent;
 class UInputMappingContext;
 class UInputAction;
@@ -42,7 +42,7 @@ protected:
 
 private:
 	UPROPERTY()
-	ARTSCamera* RTSPlayer = nullptr;
+	AMainPlayer* MainPlayer = nullptr;
 
 	UPROPERTY()
 	UEnhancedInputComponent* EnhancedInputComponent = nullptr;

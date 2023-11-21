@@ -2,7 +2,7 @@
 
 
 #include "Core/RTSController.h"
-#include "CameraSystem/RTSCamera.h"
+#include "Characters/MainPlayer.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "InputAction.h"
@@ -17,8 +17,8 @@ void ARTSController::OnPossess(APawn* aPawn)
 {
 	Super::OnPossess(aPawn);
 	
-	RTSPlayer = Cast<ARTSCamera>(aPawn);
-	checkf(RTSPlayer, TEXT("Player is null"));
+	MainPlayer = Cast<AMainPlayer>(aPawn);
+	checkf(MainPlayer, TEXT("Player is null"));
 
 	EnhancedInputComponent = Cast<UEnhancedInputComponent>(InputComponent);
 	checkf(EnhancedInputComponent, TEXT("EnhancedInputComponent is null"));
@@ -56,26 +56,26 @@ void ARTSController::OnUnPossess()
 void ARTSController::HandleMove(const FInputActionValue& InputActionValue)
 {
 	const FVector2D MovementVector = InputActionValue.Get<FVector2D>();
-	if (RTSPlayer)
+	if (MainPlayer)
 	{
-		RTSPlayer->CameraMove(MovementVector);
+		MainPlayer->Move(MovementVector);
 	}
 }
 
 void ARTSController::HandleRotate()
 {
-	if (RTSPlayer)
+	if (MainPlayer)
 	{
-		RTSPlayer->CameraRotation();
+		MainPlayer->Rotate();
 	}
 }
 
 void ARTSController::HandleZoom(const FInputActionValue& InputActionValue)
 {
 	const float ZoomValue = InputActionValue.Get<float>();
-	if (RTSPlayer)
+	if (MainPlayer)
 	{
-		RTSPlayer->CameraZoom(ZoomValue);
+		MainPlayer->Zoom(ZoomValue);
 	}
 }
  
