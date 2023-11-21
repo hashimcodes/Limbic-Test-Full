@@ -98,8 +98,8 @@ bool AMainPlayer::IsCursurOnEdges(const FVector2D& MousePosiiton)
 
 void AMainPlayer::MoveEdges(const FVector2D& MousePosiiton)
 {
-	float x = 0;
-	float y = 0;
+	float x = 0.f;
+	float y = 0.f;
 	if (MousePosiiton.X <= CameraEdgesMargin)
 	{
 		x = -1;

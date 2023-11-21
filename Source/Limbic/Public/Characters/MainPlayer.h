@@ -22,6 +22,9 @@ public:
 
 	virtual void Tick(float DeltaTime) override;
 
+	UPROPERTY(VisibleAnywhere)
+	TObjectPtr<USpringArmComponent> SpringArm;
+
 	UFUNCTION()
 	void Move(const FVector2D& Value);
 
@@ -35,9 +38,6 @@ protected:
 	virtual void BeginPlay() override;
 
 private:
-
-	UPROPERTY(VisibleAnywhere)
-	TObjectPtr<USpringArmComponent> SpringArm;
 
 	UPROPERTY(VisibleAnywhere)
 	TObjectPtr<UCameraComponent> Camera;

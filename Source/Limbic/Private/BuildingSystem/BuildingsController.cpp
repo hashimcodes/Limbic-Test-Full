@@ -3,7 +3,10 @@
 
 #include "BuildingSystem/BuildingsController.h"
 #include "BuildingSystem/Building.h"
+#include "Characters/MainPlayer.h"
 #include <Kismet/GameplayStatics.h>
+#include "GameFramework/SpringArmComponent.h"
+
 
 ABuildingsController::ABuildingsController()
 {
@@ -87,8 +90,14 @@ FVector ABuildingsController::GetMousePlace()
 		return FVector::ZeroVector;
 	}
 	FVector worldLocation = FVector::ZeroVector;
-	FVector worldDirection= FVector::ZeroVector;
+	FVector worldDirection = FVector::ZeroVector;
+	float worldDirectionModifier = 1.f;
 	PlayerController->DeprojectMousePositionToWorld(worldLocation, worldDirection);
-	FVector mouseWorldLocation = worldLocation + (worldDirection * 1500.f);
+	AMainPlayer* Player = Cast<AMainPlayer>(PlayerController->GetPawn());
+	if (Player && Player->SpringArm)
+	{
+		worldDirectionModifier = Player->SpringArm->TargetArmLength;
+	}
+	FVector mouseWorldLocation = worldLocation + (worldDirection * worldDirectionModifier);
 	return FVector(mouseWorldLocation.X, mouseWorldLocation.Y, 0.f);
 }
